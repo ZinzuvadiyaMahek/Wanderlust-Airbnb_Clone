@@ -21,6 +21,7 @@ const userRouter = require("./routes/user.js"); // user router
 const { default: MongoStore } = require('connect-mongo');
 
 const dbUrl = process.env.ATLASDB_URL;
+const PORT = process.env.PORT;
 
 main()
 .then(() => {
@@ -48,7 +49,7 @@ const store = MongoStore.create({
     touchAfter : 24 * 3600,
 });
 
-store.on("error" , () => {
+store.on("error" , (err) => {
     console.log("ERROR in MONGO SESSION STORE" , err);
 });
 
@@ -110,6 +111,6 @@ app.use((err, req , res , next) => {
     res.status(statusCode).render("error.ejs" , {message});
 });
 
-app.listen(3030, () => {
-    console.log("server is listening on port 3030");
+app.listen(PORT, () => {
+    console.log(`server is listening on port ${PORT}`);
 });
