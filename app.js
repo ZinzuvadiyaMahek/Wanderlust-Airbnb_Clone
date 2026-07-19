@@ -75,10 +75,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());    // serialize user information during that session. for ex:- when user signup or login then its all signup/login info will be stored till that session ends.
 passport.deserializeUser(User.deserializeUser()); // when session ends user information will be deserialize or removed.
 
-// app.get("/" , (req , res) => {
-//     res.send("Hi, I am root");
-// });
-
 app.use((req , res , next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
@@ -95,6 +91,11 @@ app.use((req , res , next) => {
 //     let registeredUser = await User.register(fakeUser , "Hello123");
 //     res.send(registeredUser);
 // });
+
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
+
 
 app.use("/listings" , listingRouter);
 app.use("/listings/:id/reviews" , reviewRouter);
